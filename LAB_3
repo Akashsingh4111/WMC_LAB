@@ -1,0 +1,67 @@
+//free space
+clc
+f = 900*(10^6);
+pt = 10;
+gt = 10^(5/10);
+gr = 10^(3/10);
+L = 16;
+lambda = (3*(10^8))/f;
+d = 100:100:2000;
+pr = (pt*gt*gr*(lambda^2))./((4*pi*d).^2)*L;
+subplot(2,1,1)
+plot(d, pr);
+title("Received Power vs Distance in Free Space Path Loss Model");
+xlabel("Distance");
+ylabel("Received Power");
+pathloss = 10*log10(pt) - 10*log10(pr);
+subplot(2,1,2)
+plot(d,pathloss);
+title("Path loss vs Distance in Free Space Path Loss Model")
+xlabel("Distance");
+ylabel("Path Loss");
+
+
+%two ray
+clc
+f = 900*(10^6);
+pt = 10;
+gt = 10^(5/10);
+gr = 10^(3/10);
+ht=40;
+hr=3;
+lambda = (3*(10^8))/f;
+d = 100:100:2000;
+pr = (pt*gt*gr*(ht^2)*(hr^2))./(d.^4);
+subplot(2,1,1);
+plot(d, pr);
+title("Power vs Distance in Two Ray Model");
+xlabel("Distance");
+ylabel("Power Received");
+path_loss = 40*log10(d) - (10*log10(gt)+10*log10(gr)+20*log10(ht)+20*log10(hr));
+subplot(2,1,2);
+plot(d, path_loss);
+title("Path Loss vs Distance in Two Ray Model");
+xlabel("Distance");
+ylabel("Power Received");
+
+
+%two-ray vs path-loss
+
+clc
+f = 900*(10^6);
+pt = 10;
+gt = 10^(5/10);
+gr = 10^(3/10);
+L = 16;
+ht = 40;
+hr = 3;
+lambda = (3*(10^8))/f;
+d = 100:100:2000;
+pr_free = (pt*gt*gr*(lambda^2))./(((4*pi*d).^2)*L);
+pathloss_free = 10*log10(pt)-10*log10(pr_free);
+pathloss_two_ray = 40*log10(d) - (10*log10(gt) - 10*log10(gr) - 20*log10(hr) - 20*log10(ht));
+plot(d, pathloss_free, '--', d, pathloss_two_ray, '*');
+title("Comparision between Path Loss in Free Space and Two Ray Model with Distance");
+xlabel("distance");
+ylabel("Path Loss");
+legend("Two ray Model", "Free Space Model")
