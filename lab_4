@@ -1,0 +1,49 @@
+% clc
+% f1 = 700*10e6;
+% f2 = 900*10e6;
+% hte = 30;
+% hre = 1.5;
+% d = 1000:200:20000;
+% % FOR MEDIUM SIZED CITY
+% ahre1 = ((1.1*log10(f1) - 0.7)*hre - (1.56*log10(f1)-0.8));  %F1 = 700 MHz
+% ahre2 = ((1.1*log10(f2) - 0.7)*hre - (1.56*log10(f2)-0.8));  %F2 = 900 MHz
+% % FOR LARGE SIZED CITY
+% ahre3 = 3.2*((log10(11.754*hre))^2)-4.97;
+% PL1 = 69.55 + 26.16*log10(f1)-13.82*log10(hte)-ahre1 + ((44.9-6.55*log10(hte))*log10(d)); %PATH LOSS FOR MEDIUM SIZED CITY FOR F1 = 700 MHz
+% PL2 = 69.55 + 26.16*log10(f2)-13.82*log10(hte)-ahre2 + ((44.9-6.55*log10(hte))*log10(d)); %PATH LOSS FOR MEDIUM SIZED CITY FOR F2 = 900 MHz
+% PL3 = 69.55 + 26.16*log10(f1)-13.82*log10(hte)-ahre3 + ((44.9-6.55*log10(hte))*log10(d)); %PATH LOSS FOR LARGE SIZED CITY FOR F1 = 700 MHz
+% PL4 = 69.55 + 26.16*log10(f2)-13.82*log10(hte)-ahre3 + ((44.9-6.55*log10(hte))*log10(d)); %PATH LOSS FOR LARGE SIZED CITY FOR F2 = 900 MHz
+% PL5 = PL1 - 2*((log10(f1/28))^2)-5.4; %PATH LOSS FOR SUBURBAN AREA FOR F1 = 700 MHz
+% PL6 = PL2 - 2*((log10(f2/28))^2)-5.4; %PATH LOSS FOR SUBURBAN AREA FOR F2 = 900 MHz
+% PL7 = PL1 - 4.78*((log10(f1))^2)+18.33*log10(f1)-40.94;  %PATH LOSS FOR RURAL AREA FOR F1 = 700 MHz
+% PL8 = PL2 - 4.78*((log10(f2))^2)+18.33*log10(f2)-40.94;  %PATH LOSS FOR RURAL AREA FOR F2 = 900 MHz
+% plot(d, PL1, '+', d, PL2, 'o', d, PL3, '*', d, PL4, '.', d, PL5, 'x', d, PL6, 's', d, PL7, 'd', d, PL8, '--');
+% title("DISTANCE vs PATH LOSS for different types of cities");
+% xlabel("Distance");
+% ylabel("Pathloss");
+% %legend("Medium Sized City (F = 700MHz)", "Medium Sized City (F = 900 MHz)", "LARGE SIZED CITY (F1 = 700 MHz)", "LARGE SIZED CITY (F2 = 900 MHz)", ...
+%    % "SUBURBAN AREA (F1 = 700 MHz)" + "SUBURBAN AREA (F2 = 900 MHz)", "RURAL AREA (F1 = 700 MHz)", "RURAL AREA (F2 = 900 MHz)");
+
+
+
+
+
+
+
+% 2nd QUESTION HATA MODEL WITH DIFFERENT TRANSMITTER HEIGHT
+clc
+fc = 700*(10^6);
+hre = 1.5;
+d1 = 5;
+d2 = 10;
+d3 = 20;
+hte = 10:10:100;
+ahre = 3.2*((log10(11.754*hre))^2)-4.97;
+Path_loss1 = 69.55 + 26.16*log10(fc) - 13.82.*log10(hte) - ahre + (44.9 - 6.55.*log10(hte))*log10(d1);
+Path_loss2 = 69.55 + 26.16*log10(fc) - 13.82.*log10(hte) - ahre + (44.9 - 6.55.*log10(hte))*log10(d2);
+Path_loss3 = 69.55 + 26.16*log10(fc) - 13.82.*log10(hte) - ahre + (44.9 - 6.55.*log10(hte))*log10(d3);
+plot(hte, Path_loss1, '--', hte, Path_loss2, '*', hte, Path_loss3, 'o');
+title("Antenna Height vs Path Loss for different distances");
+xlabel("Antenna Height");
+ylabel("Path Loss");
+legend("D=5 KM", "D=10 KM", "D=20 KM");
