@@ -1,0 +1,40 @@
+% clc
+% f = 900*(10^6);
+% n=3;
+% d = 1000:200:20000;
+% d0 = 500;
+% c = 3*(10^8);
+% PLFS = 20*log10(d/d0)+20*log10(f) - 20*log10(c);
+% PL = PLFS + 10*n.*log10(d/d0);
+% x = randn(size(d));
+% PL_LN = PL + x;
+% disp(d);
+% figure;
+% plot(d,PL_LN);
+% xlabel("Distance");
+% ylabel("Path Loss");
+% title("Path Loss vs Distance in Log Normal Shadowing ")
+% grid on;
+
+
+f = 900*(10^6); % Frequency in Hz
+d0 = 500; % Reference distance in meters
+d = 1000:200:20000; % Distance range in meters
+c = 3e8; % Speed of light in m/s
+x = randn(1, length(d)); % Generate random shadowing values
+pt = -10; % Transmit power in dBm
+n = [1, 2, 3]; % Path loss exponent values
+figure(1);
+for i = 1:length(n)
+    PLFS = (20*log10(4*pi/c)) + 20*log10(f) + 20*log10(d0);
+    PL = PLFS + 10*n(i)*log10(d/d0) + x;
+    prec = pt - PL;
+    plot(d, prec);
+    hold on;
+end
+hold off;
+xlabel("Distance (m)");
+ylabel("Received Power (dBm)");
+title("Log Normal Shadowing Path Loss vs Distance");
+legend("n=1", "n=2", "n=3");
+grid on;
