@@ -1,0 +1,19 @@
+%channel bandwidth vs capacity
+clc
+t_b = 30*1000000;
+c_b = 50*1000;
+N = input("Enter value of N: ");
+Area = input("Enter the area:" );
+number_of_Channels = t_b/c_b;
+cluster_size = N;
+channels = number_of_Channels/N;
+if N~= 1
+    no_of_cluster = Area/N;
+else 
+    no_of_cluster = 1;
+end
+total_channel = no_of_cluster*channels;
+capacity = total_channel;
+disp(capacity);
+
+%
